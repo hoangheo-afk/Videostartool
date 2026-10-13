@@ -13,12 +13,14 @@ fi
 
 echo "Using SDK: $SDK"
 
-clang -dynamiclib \
+clang++ -dynamiclib \
     -arch arm64 -arch arm64e \
     -isysroot "$SDK" \
     -F"$SDK/System/Library/Frameworks" \
     -miphoneos-version-min=14.0 \
     -fobjc-arc \
+    -std=c++17 \
+    -lc++ \
     -framework UIKit \
     -framework Foundation \
     -framework StoreKit \
