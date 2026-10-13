@@ -14,6 +14,7 @@
 static UIWindow       *gWindow = nil;
 static VSTPanel       *gPanel  = nil;
 static VSTFloatButton *gFloat  = nil;
+static BOOL            gPanelVisible = NO;
 
 static UIColor *kCyan(void)    { return [UIColor colorWithRed:0.20 green:0.85 blue:1.00 alpha:1.0]; }
 static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 blue:0.10 alpha:1.0]; }
@@ -376,7 +377,12 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
 }
 
 - (void)closeTapped {
+    gPanelVisible = NO;
     self.hidden = YES;
+    if (gWindow) {
+        gWindow.rootViewController.view.userInteractionEnabled = YES;
+        [gWindow setNeedsLayout];
+    }
 }
 
 @end
@@ -441,7 +447,14 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
 
 - (void)handleTap:(UITapGestureRecognizer *)g {
     if (g.state != UIGestureRecognizerStateEnded) return;
-    gPanel.hidden = !gPanel.hidden;
+    if (!gPanel) return;
+    gPanelVisible = !gPanelVisible;
+    gPanel.hidden = !gPanelVisible;
+    [gPanel.superview bringSubviewToFront:gPanel];
+    [gPanel.superview bringSubviewToFront:self];
+    if (gWindow) {
+        gWindow.rootViewController.view.userInteractionEnabled = YES;
+    }
 }
 
 @end
@@ -450,6 +463,14 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
 @end
 
 @implementation VSTWindow
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *hit = [super hitTest:point withEvent:event];
+    if (hit == self) return nil;
+    if (hit == self.rootViewController.view) return nil;
+    return hit;
+}
+
 @end
 
 static void VSTSetup(void) {
@@ -467,6 +488,7 @@ static void VSTSetup(void) {
     gWindow.backgroundColor = [UIColor clearColor];
     gWindow.rootViewController = [[UIViewController alloc] init];
     gWindow.rootViewController.view.backgroundColor = [UIColor clearColor];
+    gWindow.rootViewController.view.userInteractionEnabled = YES;
     gWindow.hidden = NO;
 
     CGFloat panelW = screen.size.width - 40;
@@ -474,6 +496,7 @@ static void VSTSetup(void) {
     CGRect panelFrame = CGRectMake(20, (screen.size.height - panelH) / 2.0, panelW, panelH);
     gPanel = [[VSTPanel alloc] initWithFrame:panelFrame];
     gPanel.hidden = YES;
+    gPanelVisible = NO;
     [gWindow.rootViewController.view addSubview:gPanel];
 
     CGFloat fSize = 60;
