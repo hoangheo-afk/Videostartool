@@ -1,0 +1,9 @@
+Package: com.mhoang.videostartool
+Name: VideoStar Tool
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: VideoStar Tool - by mhoang
+Maintainer: mhoang
+Author: mhoang
+Section: Tweaks
+Depends: mobilesubstrate
