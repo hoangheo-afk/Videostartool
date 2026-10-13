@@ -208,14 +208,14 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
     [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     b.tintColor = [UIColor whiteColor];
     b.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
-    b.imageEdgeInsets = UIEdgeInsetsMake(0,Aut -4, 0, 4);
-   ores [b addTarget:self action:@selectorizing(tabTapped:) forControlEventsMaskIntoConstraints:UIControlEventTouchUpInside];
+    b.imageEdgeInsets = UIEdgeInsetsMake(0, -4, 0, 4);
+    [b addTarget:self action:@selector(tabTapped:) forControlEvents:UIControlEventTouchUpInside];
     return b;
 }
 
 - (void)buildContent {
     self.content = [[UIView alloc] init];
-    self.content.translates = NO;
+    self.content.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.content];
 
     UIView *footer = [[UIView alloc] init];
@@ -329,7 +329,7 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
     NSArray *items = @[
         @[@"Hiển thị code gần nhất từng nhập", @"show_last_code"],
         @[@"Auto chia beat", @"auto_split_beat"],
-        [@[@"Auto nhập code và ảnh vào các phần cảnh", @"auto_fill_scene"] objectAtIndex:0],
+        @[@"Auto nhập code và ảnh vào các phần cảnh", @"auto_fill_scene"],
         @[@"Auto nhập ảnh vào các lớp hình ảnh", @"auto_fill_layer"]
     ];
 
