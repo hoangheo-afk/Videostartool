@@ -8,6 +8,13 @@
 #define kVersion  @"V1.0"
 #define kDefaults @"mhoang.vstool"
 
+@class VSTPanel;
+@class VSTFloatButton;
+
+static UIWindow       *gWindow = nil;
+static VSTPanel       *gPanel  = nil;
+static VSTFloatButton *gFloat  = nil;
+
 static UIColor *kCyan(void)    { return [UIColor colorWithRed:0.20 green:0.85 blue:1.00 alpha:1.0]; }
 static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 blue:0.10 alpha:1.0]; }
 
@@ -201,14 +208,14 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
     [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     b.tintColor = [UIColor whiteColor];
     b.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold];
-    b.imageEdgeInsets = UIEdgeInsetsMake(0, -4, 0, 4);
-    [b addTarget:self action:@selector(tabTapped:) forControlEvents:UIControlEventTouchUpInside];
+    b.imageEdgeInsets = UIEdgeInsetsMake(0,Aut -4, 0, 4);
+   ores [b addTarget:self action:@selectorizing(tabTapped:) forControlEventsMaskIntoConstraints:UIControlEventTouchUpInside];
     return b;
 }
 
 - (void)buildContent {
     self.content = [[UIView alloc] init];
-    self.content.translatesAutoresizingMaskIntoConstraints = NO;
+    self.content.translates = NO;
     [self addSubview:self.content];
 
     UIView *footer = [[UIView alloc] init];
@@ -322,7 +329,7 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
     NSArray *items = @[
         @[@"Hiển thị code gần nhất từng nhập", @"show_last_code"],
         @[@"Auto chia beat", @"auto_split_beat"],
-        @[@"Auto nhập code và ảnh vào các phần cảnh", @"auto_fill_scene"],
+        [@[@"Auto nhập code và ảnh vào các phần cảnh", @"auto_fill_scene"] objectAtIndex:0],
         @[@"Auto nhập ảnh vào các lớp hình ảnh", @"auto_fill_layer"]
     ];
 
@@ -444,10 +451,6 @@ static UIColor *kPanelBg(void) { return [UIColor colorWithRed:0.04 green:0.07 bl
 
 @implementation VSTWindow
 @end
-
-static VSTWindow      *gWindow = nil;
-static VSTPanel       *gPanel  = nil;
-static VSTFloatButton *gFloat  = nil;
 
 static void VSTSetup(void) {
     if (gWindow) return;
