@@ -5,7 +5,7 @@ INSTALL_TARGET_PROCESSES = VideoStar
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = VideoStarTool
-VideoStarTool_FILES = Tweak.x
+VideoStarTool_FILES = Tweak.mm
 VideoStarTool_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unused-variable
 VideoStarTool_FRAMEWORKS = UIKit Foundation StoreKit CoreGraphics
 
